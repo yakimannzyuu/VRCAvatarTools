@@ -69,5 +69,5 @@ Assets/StreamingAssets/crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 *
-!.gitignore
 !/[Aa]ssets/Yakimannzyuu/*
+!.gitignore
