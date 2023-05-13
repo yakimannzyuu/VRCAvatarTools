@@ -76,4 +76,4 @@
 # Yakimannzyuu部部のみ
 *
 !.gitignore
-!/[Aa]ssets/*
+!/[Aa]ssets/
