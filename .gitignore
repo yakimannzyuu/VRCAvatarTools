@@ -76,4 +76,4 @@
 # Yakimannzyuu部部のみ
 *
 !.gitignore
-!/Assets/Yakimannzyuu/Editor/*
+!/[Aa]ssets/*
