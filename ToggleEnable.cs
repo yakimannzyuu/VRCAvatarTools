@@ -9,6 +9,7 @@ namespace Yakimannzyuu
         const string _MenuNameSetEditorOnly = "Tools/Yakimannzyuu/ChangeEditorOnly #e";
         const string _Untagged = "Untagged";
         const string _EditorOnly = "EditorOnly";
+
         // アクティブ/非アクティブ化のショートカットを追加します。
         // Shift + a : 非アクティブが含まれている場合はすべてアクティブに
         // Shift + a : すべてアクティブならすべて非アクティブに。
@@ -16,9 +17,10 @@ namespace Yakimannzyuu
         static void ChangeEnable()
         {
             GameObject[] selectionObj = Selection.gameObjects;
+            bool toActive = FindUnActive(selectionObj);
 
             Undo.RecordObjects(selectionObj, _MenuNameChangeEnable);
-            SetActives(selectionObj, !FindUnActive(selectionObj));
+            SetActives(selectionObj, toActive);
             Undo.RecordObjects(selectionObj, $"{_MenuNameChangeEnable} end");
         }
 
@@ -27,13 +29,27 @@ namespace Yakimannzyuu
         static void SetEditorOnly()
         {
             GameObject[] selectionObj = Selection.gameObjects;
-            bool toActive = !FindUnActive(selectionObj);
+            bool toActive = FindUnActive(selectionObj);
 
             Undo.RecordObjects(selectionObj, _MenuNameSetEditorOnly);
             SetActives(selectionObj, toActive);
             foreach(GameObject obj in selectionObj)
                 obj.tag = toActive ? _Untagged : _EditorOnly;
             Undo.RecordObjects(selectionObj, $"{_MenuNameSetEditorOnly} end");
+
+        }
+
+        [MenuItem( _MenuNameChangeEnable, true )]
+        [MenuItem( _MenuNameSetEditorOnly, true )]
+        static bool CanChange()
+        {
+            GameObject[] selectionObj = Selection.gameObjects;
+            bool toActive = selectionObj.Length > 0 ? FindUnActive(selectionObj) : true;
+            Menu.SetChecked(_MenuNameChangeEnable, !toActive);
+            Menu.SetChecked(_MenuNameSetEditorOnly, !toActive);
+
+            var gameObjects = Selection.gameObjects;
+            return gameObjects != null && 0 < gameObjects.Length;
         }
 
         // アクティブかどうかを取得します。falseが優先されます。
@@ -41,8 +57,8 @@ namespace Yakimannzyuu
         {
             foreach(GameObject obj in objects)
                 if(!obj.activeSelf)
-                    return false;
-            return true;
+                    return true;
+            return false;
         }
 
         // オブジェクトのアクティブを設定します。
