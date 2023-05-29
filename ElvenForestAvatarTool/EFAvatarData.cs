@@ -43,7 +43,7 @@ namespace Yakimannzyuu
         // 初期値書き込み
         void Awake()
         {
-            if(Contents != null)
+            if(Contents != null && Contents.Count > 0)
                 return;
             Contents = new List<EFDataContent>
             {

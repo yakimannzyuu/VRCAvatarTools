@@ -1,0 +1,8 @@
+ctrl + @
+cd Assets/Yakimannzyuu/Editor
+
+git remote add origin https://github.com/yakimannzyuu/VRCAvatarTools
+
+git add .
+git commit -m "first commit v1.01"
+git push -u origin update
